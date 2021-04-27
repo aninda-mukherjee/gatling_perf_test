@@ -35,15 +35,17 @@ object createUser {
           .check(status.in(201))
           .check(responseTimeInMillis.saveAs("execLatency"))
           .check(bodyString.saveAs("responsePayload"))
-//          .check(regex("serverGroupCompanyId\":\"(.*?)\",").saveAs("CoID"))
+          .check(jsonPath("$.id").saveAs("p_uuid"))
       )
         .exec(session=>{
           val response=session("responsePayload").as[String];
+          val uuid=session("p_uuid").as[String];
           val latency=session("execLatency").as[Integer].toString();
 
           logger.info("=======POST CREATE USER  Response=========")
           logger.info("======>> LATENCY: "+latency+" miliseconds")
           logger.info("======>> RESPONSE: "+response+ "message")
+          logger.info("======>> USER UUID: "+uuid)
           session;
 
         })

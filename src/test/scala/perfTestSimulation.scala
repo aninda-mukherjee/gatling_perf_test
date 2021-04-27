@@ -39,7 +39,7 @@ class perfTestSimulation extends Simulation{
 
       .exec(createUser.createUser_Transaction)
 //      .pause(10)
-  //    .exec(getUserByID.getUserByID_Transaction)
+      .exec(getUserByID.getUserByID_Transaction)
 
 
   setUp(

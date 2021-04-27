@@ -16,7 +16,7 @@ object getUserByID {
         })
         .exec(
         http("get_userById")
-          .get("/user/v1/find/d61ead34-3d8c-4ef0-813e-6420bdd10a87")
+          .get("/user/v1/find/${p_uuid}")
           .header("Cache-Control", "no-cache")
           .header("Accept-Language", "en-US")
           .header("Accept", "*/*")
@@ -25,9 +25,21 @@ object getUserByID {
 
           .check(status.in(200))
           .check(responseTimeInMillis.saveAs("execLatency"))
-//          .check(regex("serverGroupCompanyId\":\"(.*?)\",").saveAs("CoID"))
+          .check(bodyString.saveAs("responsePayload"))
+          .check(jsonPath("$.id").is("${p_uuid}"))
 
       )
+
+          .exec(session=>{
+            val response=session("responsePayload").as[String];
+            val latency=session("execLatency").as[Integer].toString();
+
+            logger.info("=======POST CREATE USER  Response=========")
+            logger.info("======>> LATENCY: "+latency+" miliseconds")
+            logger.info("======>> RESPONSE: "+response+ "message")
+            session;
+
+          })
 
 
 }
