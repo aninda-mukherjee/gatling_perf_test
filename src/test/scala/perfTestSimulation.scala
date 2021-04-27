@@ -37,8 +37,8 @@ class perfTestSimulation extends Simulation{
 
   val createUserGroup = scenario("createUserGroup")
 
-      .exec(createUser.createUser_Transaction)
-//      .pause(10)
+      .exec(createUser.createUser_Transaction).exitHereIfFailed
+      .pause(10)
       .exec(getUserByID.getUserByID_Transaction)
 
 
