@@ -2,6 +2,17 @@ package com.update.transactions
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
+/**
+ * Test Simulation for getUserById API.
+ *
+ * Get call
+ * Below is the endpoint of this API:
+ *
+ *  curl --location --request GET 'http://localhost:8080/user/v1/find/<valid-uuid>' \
+ *  --data-raw ''
+ *
+ * @author XXXXXX
+ */
 
 object getUserByID {
 
@@ -27,19 +38,19 @@ object getUserByID {
           .check(responseTimeInMillis.saveAs("execLatency"))
           .check(bodyString.saveAs("responsePayload"))
           .check(jsonPath("$.id").is("${p_uuid}"))
-
       )
 
-          .exec(session=>{
-            val response=session("responsePayload").as[String];
-            val latency=session("execLatency").as[Integer].toString();
+          // Logs for debugging purpose
+        .exec(session=>{
+          val response=session("responsePayload").as[String];
+          val latency=session("execLatency").as[Integer].toString();
 
-            logger.info("=======POST CREATE USER  Response=========")
-            logger.info("======>> LATENCY: "+latency+" miliseconds")
-            logger.info("======>> RESPONSE: "+response+ "message")
-            session;
+          logger.info("=======POST CREATE USER  Response=========")
+          logger.info("======>> LATENCY: "+latency+" miliseconds")
+          logger.info("======>> RESPONSE: "+response+ "message")
+          session;
 
-          })
+        })
 
 
 }
