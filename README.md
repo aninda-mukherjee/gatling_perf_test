@@ -37,7 +37,7 @@ curl --location --request GET 'http://localhost:8080/user/v1/find/<valid-uuid>' 
 ```
 mvn gatling:test -Dgatling.simulationClass=perfTestSimulation
 ```
-#### Run following maven command to run simulation with default values.
+#### Run following maven command to run simulation with parameter.
 ```
 mvn gatling:test -Dgatling.simulationClass=perfTestSimulation -Durl=http://localhost:8080 -DnUsers=10 -DrampUpTime=5 -DnDuration=10 -DnoOfUsersCreation=100
 
